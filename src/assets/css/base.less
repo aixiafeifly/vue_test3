@@ -1,0 +1,43 @@
+@import './normalize'
+
+:root {
+  --color-text: #666;
+  --color-background: #fff;
+  --font-size: 14px
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+//变量用法
+@width: 80vh;
+@height: @width+10vh;
+
+//混合用法
+.border {
+  border-bottom: 1px solid #dedede;
+}
+
+.menu {
+  .border()
+}
+
+//嵌套用法
+.header {
+  color: #333;
+
+  .navigation {
+    background-color: aqua;
+  }
+}
+
+@var: 50vh/2;
+
+.w {
+  width: calc(50% + (@var - 20px));
+}
