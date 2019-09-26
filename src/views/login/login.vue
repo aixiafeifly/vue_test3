@@ -119,60 +119,60 @@
       FNinput(evnet) {
         console.log(evnet.target.checked);
       },
-      checkALL(event) {}
-      let that = this
-      if (event.target.checked) {
-        that.fruitall = that.fruitall.filter(item => {
+      checkALL(event) {
+        let that = this
+        if (event.target.checked) {
+          that.fruitall = that.fruitall.filter(item => {
 
-          if (!item.select) {
-            item.select = true
-          }
-          return item
-        })
+            if (!item.select) {
+              item.select = true
+            }
+            return item
+          })
+          that.fruitlIST = that.fruitall.filter(item => {
+            if (item.select) {
+              return item.name
+            }
+          })
+        } else {
+          that.fruitall = that.fruitall.filter(item => {
+            item.select = false
+            return item
+          })
+          that.fruitlIST = []
+        }
+      },
+      // ｅ目标， index是索引值
+      FNcheck(event, index) {
+        let that = this
         that.fruitlIST = that.fruitall.filter(item => {
           if (item.select) {
-            return item.name
+            return item
           }
         })
-      } else {
-        that.fruitall = that.fruitall.filter(item => {
-          item.select = false
-          return item
-        })
-        that.fruitlIST = []
-      }
-    },
-    // ｅ目标， index是索引值
-    FNcheck(event, index) {
-      let that = this
-      that.fruitlIST = that.fruitall.filter(item => {
-        if (item.select) {
-          return item
+        //限制个数
+        if (that.fruitlIST.length >= 3) {
+          that.fruitall = that.fruitall.filter(item => {
+            if (!item.select) {
+              item.disabled = true
+            }
+            return item
+          })
+        } else {
+          that.fruitall = that.fruitall.filter(item => {
+            item.disabled = false
+            return item
+          })
         }
-      })
-      //限制个数
-      if (that.fruitlIST.length >= 3) {
-        that.fruitall = that.fruitall.filter(item => {
-          if (!item.select) {
-            item.disabled = true
-          }
-          return item
-        })
-      } else {
-        that.fruitall = that.fruitall.filter(item => {
-          item.disabled = false
-          return item
-        })
+        //全选
+        if (that.fruitlIST.length != that.fruitall.length) {
+          return
+        } else {
+          that.checkALLSeleced = true
+        }
       }
-      //全选
-      if (that.fruitlIST.length != that.fruitall.length) {
-        return
-      } else {
-        that.checkALLSeleced = true
-      }
-    }
 
-  }
+    }
   };
 
 </script>
