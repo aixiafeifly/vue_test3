@@ -11,7 +11,6 @@
       <input type="checkbox" v-model="isAgree"> 是否同意
       <button　:disabled="!isAgree">提交</button>
     </div>
-
     <div>
       下拉选择
       <select v-model="fruit">
@@ -27,6 +26,19 @@
         <input type="checkbox" name="" :id="index" :value="item.name" v-model="item.select" :disabled='item.disabled'
           @change="FNcheck($event,index)">{{item.name}}</label>
       全选 <input type="checkbox" name="" id="" @input="checkALL($event)" v-model="checkALLSeleced">
+    </div>
+    <div>
+      搜索:
+      <input type="text" name="" value="" v-model.trim="seachVal" @input="FnSeach">
+      <ul>
+        <li v-for="(item, index) in fruitall" :key="index">{{item.name}}</li>
+      </ul>
+      <ul>
+        <li v-for="(item, index) in seachList" :key="index">{{item.name}}</li>
+      </ul>
+      <ul>
+        <li v-for="(item, index) in seachListC" :key="index">{{item.name}}</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -49,7 +61,7 @@
           select: false,
           disabled: false
         }, {
-          name: '榴莲',
+          name: '榴子莲',
           select: false,
           disabled: false
         }, {
@@ -63,7 +75,10 @@
         }],
         fruitlIST: [],
         isAgree: false,
-        checkALLSeleced: false
+        checkALLSeleced: false,
+        seachVal: '',
+        seachList: []
+
       };
     },
     filters: {
@@ -113,9 +128,34 @@
           .reduce((pre, curr) => {
             return pre + curr;
           }, 0);
+      },
+      seachListC: function () {
+        let that = this
+        let seachVal = that.seachVal.trim()
+        if (seachVal == "" || undefined || null || seachVal.length == 0) {
+          return []
+        } else {
+          return that.fruitall.filter(item => {
+            return item.name.indexOf(seachVal) !== -1
+          })
+        }
       }
+
     },
     methods: {
+
+      FnSeach() {
+        let that = this
+        let seachVal = that.seachVal.trim()
+        if (seachVal == "" || undefined || null || seachVal.length == 0) {
+          that.seachList = []
+        } else {
+          that.seachList = that.fruitall.filter(item => {
+            return item.name.indexOf(seachVal) !== -1
+          })
+        }
+
+      },
       FNinput(evnet) {
         console.log(evnet.target.checked);
       },
@@ -123,7 +163,6 @@
         let that = this
         if (event.target.checked) {
           that.fruitall = that.fruitall.filter(item => {
-
             if (!item.select) {
               item.select = true
             }
