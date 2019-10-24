@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 第一种
+    // new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       resolve('aaa')
+    //     }, 1000);
+    //   })
+    //   .then(res => {
+    //     console.log(res, '第一個')
+    //     return new Promise((resolve, reject) => {
+    //       resolve(res + 1111)
+    //     })
+    //   })
+    //   .then(res => {
+    //     console.log(res, 'two');
+    //     return new Promise(resolve => {
+    //       resolve(res + 222)
+    //     })
+    //   })
+    //   .then(res => {
+    //     console.log(res + '第三次');
+    //   })
+
+
+
+    // 第二种
+    // new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       resolve('aaa')
+    //     }, 1000);
+    //   })
+    //   .then(res => {
+    //     console.log(res, '第一個')
+    //     return Promise.resolve(res + 1111)
+
+    //   })
+    //   .then(res => {
+    //     console.log(res, 'two');
+    //     return Promise.resolve(res + 2222)
+    //   })
+    //   .then(res => {
+    //     console.log(res + '第三次');
+    //   })
+
+
+    // 第三种  
+    new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('aaa')
+        }, 1000);
+      })
+      .then(res => {
+        console.log(res, '第一個')
+        return res + 1111
+      })
+      .then(res => {
+        console.log(res, 'two');
+        return res + 2222
+      })
+      .then(res => {
+        console.log(res + '第三次');
+      })
+
+
+    // 两种抛出错误
+    new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('aaa')
+        }, 1000);
+      })
+      .then(res => {
+        console.log(res, '第一個')
+        //return Promise.reject('error messges')
+        // throw  'error messges'
+
+      })
+      .then(res => {
+        console.log(res, 'two');
+        return Promise.resolve(res + 2222)
+      })
+      .then(res => {
+        console.log(res + '第三次');
+      }).catch(err => {
+        console.log(err);
+
+      })
+  </script>
+  <script>
+
+    //promise.all中。只要有一個異步失敗，那麼就整個失敗
+    Promise.all([
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('all-1')
+        }, 1000);
+      }),
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject('all-2')
+        }, 1000);
+      }),
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('all-3')
+        }, 1000);
+      }),
+      
+    ]).then(res=>{
+      console.log(res);
+      
+    })
+  </script>
+
+</body>
+
+</html>
